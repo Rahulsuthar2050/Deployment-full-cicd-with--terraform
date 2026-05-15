@@ -38,3 +38,7 @@ variable "machine_type" {
   type        = string
   default     = "e2-medium"
 }
+variable "gke_service_account" {
+  type        = string
+  description = "The service account used by GKE nodes"
+}
