@@ -2,9 +2,9 @@ name: 'Terraform Infrastructure'
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "Main" ]
   pull_request:
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
   terraform:
