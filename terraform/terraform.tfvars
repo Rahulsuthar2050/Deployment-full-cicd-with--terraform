@@ -1,4 +1,4 @@
-project_id    = "my-awesome-gcp-project-123"
+project_id    = "mario-super-demo"
 region        = "us-east1"
-cluster_name  = "prod-cluster-01"
+cluster_name  = "Micro-service-arch"
 gke_num_nodes = 3
