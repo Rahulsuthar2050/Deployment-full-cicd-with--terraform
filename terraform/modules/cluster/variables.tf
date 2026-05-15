@@ -47,3 +47,7 @@ variable "subnet_id" {
   type        = string
   description = "The ID of the subnet passed from the networking module"
 }
+variable "service_account_email" {
+  type        = string
+  description = "The service account email that the GKE nodes will run as"
+}
