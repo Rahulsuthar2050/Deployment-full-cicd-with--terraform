@@ -38,3 +38,12 @@ variable "machine_type" {
   type        = string
   default     = "e2-medium"
 }
+variable "vpc_id" {
+  type        = string
+  description = "The ID of the VPC network passed from the networking module"
+}
+
+variable "subnet_id" {
+  type        = string
+  description = "The ID of the subnet passed from the networking module"
+}
