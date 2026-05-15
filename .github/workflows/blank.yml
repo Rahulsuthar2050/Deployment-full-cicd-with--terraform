@@ -38,6 +38,4 @@ jobs:
     - name: Terraform Apply
       working-directory: ./terraform
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve \
-          -var="project_id=${{ secrets.GCP_PROJECT_ID }}" \
-          -var="gke_service_account=${{ secrets.GCP_GKE_SERVICE_ACCOUNT }}"
+      run: terraform apply -auto-approve -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -var="gke_service_account=${{ secrets.GCP_GKE_SERVICE_ACCOUNT }}"
