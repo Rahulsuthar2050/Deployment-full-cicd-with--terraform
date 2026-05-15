@@ -1,0 +1,44 @@
+gcloud iam workload-identity-pools create "github-pool" \
+  --project="$PROJECT_ID" \
+  --location="global" \
+  --display-name="GitHub Actions Pool"   
+
+  gcloud iam workload-identity-pools providers create-oidc "github-provider" \
+  --project="your-project-id" \
+  --location="global" \
+  --workload-identity-pool="github-pool" \
+  --display-name="GitHub OIDC Provider" \
+  --issuer-uri="https://token.actions.githubusercontent.com" \
+  --attribute-mapping="google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.repository=assertion.repository" \
+  --attribute-condition="assertion.repository == 'your-org/your-repo'"   
+
+  https://github.com/
+  assertion.repository == 'Rahulsuthar2050/Deployment-full-cicd-with--terraform'
+  .git
+
+
+  gcloud iam service-accounts add-iam-policy-binding "micro-service-arch@mario-super-demo.iam.gserviceaccount.com" \
+    --project="mario-super-demo" \
+    --role="roles/iam.workloadIdentityUser" \
+    --member="principalSet://iam.googleapis.com/projects/mario-super-demo/locations/global/workloadIdentityPools/github-pool-microservices-arch/attribute.repository/Rahulsuthar2050/Deployment-full-cicd-with--terraform"
+
+    gcloud iam service-accounts add-iam-policy-binding "micro-service-arch@mario-super-demo.iam.gserviceaccount.com" \
+    --project="$PROJECT_ID" \
+    --role="roles/iam.workloadIdentityUser" \
+    --member="principalSet://iam.googleapis.com/projects/813857872790/locations/global/workloadIdentityPools/github-pool-microservices-arch/attribute.repository/Rahulsuthar2050/Deployment-full-cicd-with--terraform"
+
+    projects/813857872790/locations/global/workloadIdentityPools/github-pool-microservices-arch/providers/github-provider
+
+    gcloud iam service-accounts add-iam-policy-binding "813857872790-compute@developer.gserviceaccount.com" \
+    --project="mario-super-demo" \
+    --role="roles/iam.serviceAccountUser" \
+    --member="serviceAccount:micro-service-arch@mario-super-demo.iam.gserviceaccount.com"
+
+     813857872790-compute@developer.gserviceaccount.com	
+Enabled
+Compute Engine default service account		
+Failed to load
+104871122567234531814 		
+projects/-/serviceAccounts/104871122567234531814
+
+gcloud iam service-accounts undelete 104871122567234531814
