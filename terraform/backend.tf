@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "var.project_id-tfstate"
+    bucket = "mario-super-demo-tfstate"
     prefix = "terraform/state"
   }
 }
