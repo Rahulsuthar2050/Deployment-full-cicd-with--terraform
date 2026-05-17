@@ -16,5 +16,5 @@ module "gke" {
   project_id = "mario-super-demo-496610"
   vpc_id     = module.network.vpc_id
   subnet_id  = module.network.subnet_id
-  service_account_email = var.gke_service_account
+  service_account_email = "micro-service-arch@mario-super-demo-496610.iam.gserviceaccount.com"
 }
