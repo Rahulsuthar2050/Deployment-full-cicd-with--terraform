@@ -1,0 +1,38 @@
+name: 'Terraform Infrastructure'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write' # Mandatory for OIDC/Workload Identity
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # This is the magic step that connects GitHub to GCP
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+        service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Init
+      working-directory: ./terraform
+      run: terraform init
+
+    - name: Terraform Plan
+      working-directory: ./terraform
+      run: terraform plan -out=tfplan -var="project_id=${{ secrets.GCP_PROJECT_ID }}"
+
+    - name: Terraform Apply
+      working-directory: ./terraform
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply tfplan -auto-approve -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -var="gke_service_account=${{ secrets.GCP_GKE_SERVICE_ACCOUNT }}"
