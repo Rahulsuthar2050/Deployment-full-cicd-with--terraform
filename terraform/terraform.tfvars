@@ -1,4 +1,4 @@
-project_id    = "mario-super-demo"
+project_id    = "mario-super-demo-496610"
 region        = "us-east1"
 cluster_name  = "Micro-service-arch"
 gke_num_nodes = 3

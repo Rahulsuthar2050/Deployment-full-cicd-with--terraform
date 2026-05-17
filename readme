@@ -4,37 +4,54 @@ gcloud iam workload-identity-pools create "github-pool" \
   --display-name="GitHub Actions Pool"   
 
   gcloud iam workload-identity-pools providers create-oidc "github-provider" \
-  --project="your-project-id" \
+  --project="mario-super-demo-496610" \
   --location="global" \
   --workload-identity-pool="github-pool" \
   --display-name="GitHub OIDC Provider" \
   --issuer-uri="https://token.actions.githubusercontent.com" \
   --attribute-mapping="google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.repository=assertion.repository" \
-  --attribute-condition="assertion.repository == 'your-org/your-repo'"   
+  --attribute-condition="assertion.repository == 'Rahulsuthar2050/Deployment-full-cicd-with--terraform'"   
 
   https://github.com/
   assertion.repository == 'Rahulsuthar2050/Deployment-full-cicd-with--terraform'
   .git
+  674753362044
 
+gcloud iam service-accounts create "micro-service-arch" \
+    --project="mario-super-demo-496610" \
+    --description="Service account for my application" \
+    --display-name="micro-service-arch"
 
-  gcloud iam service-accounts add-iam-policy-binding "micro-service-arch@mario-super-demo.iam.gserviceaccount.com" \
-    --project="mario-super-demo" \
+  gcloud iam service-accounts add-iam-policy-binding "micro-service-arch@mario-super-demo-496610.iam.gserviceaccount.com" \
+    --project="mario-super-demo-496610" \
     --role="roles/iam.workloadIdentityUser" \
-    --member="principalSet://iam.googleapis.com/projects/mario-super-demo/locations/global/workloadIdentityPools/github-pool-microservices-arch/attribute.repository/Rahulsuthar2050/Deployment-full-cicd-with--terraform"
+    --member="principalSet://iam.googleapis.com/projects/45651906151/locations/global/workloadIdentityPools/github-provider/attribute.repository/Rahulsuthar2050/Deployment-full-cicd-with--terraform"
 
-    gcloud iam service-accounts add-iam-policy-binding "micro-service-arch@mario-super-demo.iam.gserviceaccount.com" \
-    --project="$PROJECT_ID" \
-    --role="roles/iam.workloadIdentityUser" \
-    --member="principalSet://iam.googleapis.com/projects/813857872790/locations/global/workloadIdentityPools/github-pool-microservices-arch/attribute.repository/Rahulsuthar2050/Deployment-full-cicd-with--terraform"
 
-    projects/813857872790/locations/global/workloadIdentityPools/github-pool-microservices-arch/providers/github-provider
+    projects/45651906151/locations/global/workloadIdentityPools/github-provider/providers/github-provider
 
-    gcloud iam service-accounts add-iam-policy-binding "813857872790-compute@developer.gserviceaccount.com" \
-    --project="mario-super-demo" \
+    gcloud iam service-accounts add-iam-policy-binding "micro-service-arch@mario-super-demo-496610.iam.gserviceaccount.com" \
+    --project="mario-super-demo-496610"" \
     --role="roles/iam.serviceAccountUser" \
     --member="serviceAccount:micro-service-arch@mario-super-demo.iam.gserviceaccount.com"
 
+    gcloud iam service-accounts add-iam-policy-binding "813857872790-compute@developer.gserviceaccount.com" \
+    --project="mario-super-demo" \
+    --role="roles/iam.storage.objects.list" \
+    --member="serviceAccount:micro-service-arch@mario-super-demo.iam.gserviceaccount.com"
+
      813857872790-compute@developer.gserviceaccount.com	
+
+     gcloud services enable compute.googleapis.com container.googleapis.com storage.googleapis.com \
+    --project="mario-super-demo-496610"
+
+    gcloud storage buckets create gs://mario-super-demo-tfstate-1\
+    --project="mario-super-demo-496610" \
+    --location="us-east1"
+    gcloud storage buckets add-iam-policy-binding gs://mario-super-demo-tfstate-1 \
+    --member="serviceAccount:micro-service-arch@mario-super-demo.iam.gserviceaccount.com" \
+    --role="roles/storage.objectUser"
+
 Enabled
 Compute Engine default service account		
 Failed to load
