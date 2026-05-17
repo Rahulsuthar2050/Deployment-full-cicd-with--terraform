@@ -33,6 +33,6 @@ jobs:
     - name: Docker Build result-image
       working-directory: ./helm-voting-code/result
       run: |
-        docker build -t examplevotingapp_result_${{ github.event.inputs.tag}}
+        docker build -t examplevotingapp_result_${{ github.event.inputs.tag}} .
         docker images
 
