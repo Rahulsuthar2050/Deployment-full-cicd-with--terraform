@@ -35,10 +35,10 @@ gcloud iam service-accounts create "micro-service-arch" \
     --role="roles/iam.serviceAccountUser" \
     --member="serviceAccount:micro-service-arch@mario-super-demo.iam.gserviceaccount.com"
 
-    gcloud iam service-accounts add-iam-policy-binding "813857872790-compute@developer.gserviceaccount.com" \
+    gcloud iam service-accounts add-iam-policy-binding "45651906151-compute@developer.gserviceaccount.com" \
     --project="mario-super-demo" \
     --role="roles/iam.storage.objects.list" \
-    --member="serviceAccount:micro-service-arch@mario-super-demo.iam.gserviceaccount.com"
+    --member="serviceAccount:micro-service-arch@mario-super-demo-496610.iam.gserviceaccount.com"
 
      813857872790-compute@developer.gserviceaccount.com	
 
@@ -51,6 +51,29 @@ gcloud iam service-accounts create "micro-service-arch" \
     gcloud storage buckets add-iam-policy-binding gs://mario-super-demo-tfstate-1 \
     --member="serviceAccount:micro-service-arch@mario-super-demo.iam.gserviceaccount.com" \
     --role="roles/storage.objectUser"
+    gcloud storage buckets add-iam-policy-binding gs://mario-super-demo-tfstate-1 \
+    --member="serviceAccount:micro-service-arch@mario-super-demo.iam.gserviceaccount.com" \
+    --role="roles/storage.objects.list"
+    gcloud storage buckets add-iam-policy-binding gs://mario-super-demo-tfstate-1 \
+    --member="serviceAccount:micro-service-arch@mario-super-demo.iam.gserviceaccount.com" \
+    --role="roles/storage.objectAdmin"
+    
+artifactregistry.repositories.create
+compute.networks.create
+
+# Grant Compute Network Admin role
+gcloud projects add-iam-policy-binding mario-super-demo-496610\
+    --member="serviceAccount:micro-service-arch@mario-super-demo-496610.iam.gserviceaccount.com" \
+    --role="roles/compute.networkAdmin"
+
+# Grant Artifact Registry Admin role
+gcloud projects add-iam-policy-binding mario-super-demo-496610\
+    --member="serviceAccount:micro-service-arch@mario-super-demo-496610.iam.gserviceaccount.com" \
+    --role="roles/artifactregistry.admin"
+
+gcloud projects add-iam-policy-binding mario-super-demo-496610\
+    --member="serviceAccount:micro-service-arch@mario-super-demo-496610.iam.gserviceaccount.com" \
+    --role="roles/container.admin"
 
 Enabled
 Compute Engine default service account		
