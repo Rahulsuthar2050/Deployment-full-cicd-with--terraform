@@ -21,7 +21,7 @@ jobs:
       uses: actions/checkout@v4
 
     # This is the magic step that connects GitHub to GCP
-    - id: 'auth"
+    - id: 'auth'
       name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v2
       with:
