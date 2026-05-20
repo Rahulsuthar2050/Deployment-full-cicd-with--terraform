@@ -21,7 +21,8 @@ jobs:
       uses: actions/checkout@v4
 
     # This is the magic step that connects GitHub to GCP
-    - name: Authenticate to Google Cloud
+    - id: 'auth"
+      name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v2
       with:
         workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
@@ -29,6 +30,12 @@ jobs:
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
+    - name: Artifactory login
+      uses: 'Docker/login-action@v3'
+      with: 
+        registry: 'us-east1-docker.pkg.dev'
+        username: 'oauth2accesstoken'
+        passowrd: '${{ steps.auth.outputs.access_token }}'
 
     - name: Docker Build result-image
       working-directory: ./helm-voting-code/result
@@ -36,5 +43,6 @@ jobs:
         docker build -t examplevotingapp_result:${{ github.event.inputs.tag}} .
         docker images
         docker tag examplevotingapp_result:${{ github.event.inputs.tag}}  us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-result/examplevotingapp_result:${{ github.event.inputs.tag}} 
+        docker login
         docker push us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-result/examplevotingapp_result:${{ github.event.inputs.tag}}
 
