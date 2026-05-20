@@ -1,0 +1,15 @@
+apiVersion: skaffold/v4beta7
+kind: Config
+metadata:
+  name: my-helm-app-pipeline
+manifests:
+  helm:
+    releases:
+      - name: my-app-release
+        chartPath: my-app # Path to your Helm chart directory
+        # This block dynamically passes your freshly built Artifact Registry image into Helm
+        setValueTemplates:
+          image.repository: "{{.IMAGE_REPO_my_app_image}}"
+          image.tag: "{{.IMAGE_TAG_my_app_image}}@{{.IMAGE_DIGEST_my_app_image}}"
+deploy:
+  skaffoldLog: {}
