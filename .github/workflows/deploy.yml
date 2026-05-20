@@ -35,7 +35,7 @@ jobs:
       with: 
         registry: 'us-east1-docker.pkg.dev'
         username: 'oauth2accesstoken'
-        passowrd: '${{ steps.auth.outputs.access_token }}'
+        password: '${{ steps.auth.outputs.access_token }}'
 
     - name: Docker Build result-image
       working-directory: ./helm-voting-code/result
