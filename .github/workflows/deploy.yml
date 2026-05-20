@@ -4,8 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Target Environment'
+        description: 'enter tag'
         required: true
+      component:
+        description: select the component
+        required: true
+        type: choice
+        options:
+        - result
+        - seed-data
+        - vote
+        - worker
         
   
 
@@ -39,10 +48,10 @@ jobs:
         password: '${{ steps.auth.outputs.access_token }}'
 
     - name: Docker Build result-image
-      working-directory: ./helm-voting-code/result
+      working-directory: ./helm-voting-code/${{ github.event.inputs.component }}
       run: |
-        docker build -t us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-result/examplevotingapp_result:${{ github.event.inputs.tag}}  .
+        docker build -t us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-${{ github.event.inputs.component }}/examplevotingapp_${{ github.event.inputs.component }}:${{ github.event.inputs.tag}}  .
         docker images
-        #docker tag examplevotingapp_result:${{ github.event.inputs.tag}}  us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-result/examplevotingapp_result:${{ github.event.inputs.tag}} 
-        docker push us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-result/examplevotingapp_result:${{ github.event.inputs.tag}}
+        #docker tag examplevotingapp_${{ github.event.inputs.component }}:${{ github.event.inputs.tag}}  us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-${{ github.event.inputs.component }}/examplevotingapp_${{ github.event.inputs.component }}:${{ github.event.inputs.tag}} 
+        docker push us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-result/examplevotingapp_${{ github.event.inputs.component }}:${{ github.event.inputs.tag}}
 
