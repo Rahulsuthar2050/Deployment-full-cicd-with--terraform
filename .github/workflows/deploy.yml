@@ -41,9 +41,8 @@ jobs:
     - name: Docker Build result-image
       working-directory: ./helm-voting-code/result
       run: |
-        docker build -t examplevotingapp_result:${{ github.event.inputs.tag}} .
+        docker build -t us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-result/examplevotingapp_result:${{ github.event.inputs.tag}}  .
         docker images
-        docker tag examplevotingapp_result:${{ github.event.inputs.tag}}  us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-result/examplevotingapp_result:${{ github.event.inputs.tag}} 
-        docker login
+        #docker tag examplevotingapp_result:${{ github.event.inputs.tag}}  us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-result/examplevotingapp_result:${{ github.event.inputs.tag}} 
         docker push us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-result/examplevotingapp_result:${{ github.event.inputs.tag}}
 
