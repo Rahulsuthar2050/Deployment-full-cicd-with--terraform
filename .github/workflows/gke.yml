@@ -37,20 +37,15 @@ jobs:
         workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
         token_format: 'access_token'
+    - id: 'cred'
+      name: Authenticate to Google Cloud
+      uses: google-github-actions/get-gke-credentials@v2
+      with:
+          cluster_name: 'voteing-microservices-cluster'
+          location: 'us-central1'
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
-    - name: Artifactory login
-      uses: 'docker/login-action@v3'
-      with: 
-        registry: 'us-east1-docker.pkg.dev'
-        username: 'oauth2accesstoken'
-        password: '${{ steps.auth.outputs.access_token }}'
-
-    - name: Docker Build result-image
-      working-directory: ./helm-voting-code/${{ github.event.inputs.component }}
+    - name: Helm deploy
+      working-directory: ./helm_voting
       run: |
-        docker build -t us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-${{ github.event.inputs.component }}/examplevotingapp_${{ github.event.inputs.component }}:${{ github.event.inputs.tag}}  .
-        docker images
-        #docker tag examplevotingapp_${{ github.event.inputs.component }}:${{ github.event.inputs.tag}}  us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-${{ github.event.inputs.component }}/examplevotingapp_${{ github.event.inputs.component }}:${{ github.event.inputs.tag}} 
-        docker push us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-${{ github.event.inputs.component }}/examplevotingapp_${{ github.event.inputs.component }}:${{ github.event.inputs.tag}}
+        helm upgrade --install ${{ github.event.inputs.component }} ${{ github.event.inputs.component }}\
+        --set image.repo=examplevotingapp_${{ github.event.inputs.component }}:${{ github.event.inputs.tag}}  us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-${{ github.event.inputs.component }}/examplevotingapp_${{ github.event.inputs.component }}:${{ github.event.inputs.tag}} 
