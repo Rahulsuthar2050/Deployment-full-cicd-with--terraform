@@ -48,4 +48,5 @@ jobs:
       working-directory: ./helm_voting
       run: |
         helm upgrade --install ${{ github.event.inputs.component }} ./${{ github.event.inputs.component }} \
-        --set image.repo="examplevotingapp_${{ github.event.inputs.component }}:${{ github.event.inputs.tag}}  us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-${{ github.event.inputs.component }}/examplevotingapp_${{ github.event.inputs.component }}:${{ github.event.inputs.tag}}"
+        --set image.repo="examplevotingapp_${{ github.event.inputs.component }}:${{ github.event.inputs.tag}}  us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-${{ github.event.inputs.component }}/examplevotingapp_${{ github.event.inputs.component }}:${{ github.event.inputs.tag}}" \
+        --atomic
