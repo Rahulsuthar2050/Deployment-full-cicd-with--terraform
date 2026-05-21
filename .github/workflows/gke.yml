@@ -12,9 +12,10 @@ on:
         type: choice
         options:
         - result
-        - seed-data
+        - db
         - vote
         - worker
+        - redis
         
   
 
