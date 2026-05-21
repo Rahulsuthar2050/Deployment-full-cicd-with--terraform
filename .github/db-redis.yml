@@ -1,0 +1,49 @@
+name: 'Deploy to GKE'
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'enter tag'
+        required: true
+      component:
+        description: select the component
+        required: true
+        type: choice
+        options:
+        - db
+        - redis
+        
+  
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write' # Mandatory for OIDC/Workload Identity
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # This is the magic step that connects GitHub to GCP
+    - id: 'auth'
+      name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+        service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+        token_format: 'access_token'
+    - id: 'cred'
+      name: Authenticate to Google Cloud
+      uses: google-github-actions/get-gke-credentials@v2
+      with:
+          cluster_name: 'voteing-microservices-cluster'
+          location: 'us-central1'
+
+    - name: Helm deploy
+      working-directory: ./helm_voting/${{ github.event.inputs.component }}
+      run: |
+        helm upgrade --install ${{ github.event.inputs.component }} . \
+        --atomic
