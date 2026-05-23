@@ -15,7 +15,7 @@ spec:
         app: vote
     spec:
       containers:
-      - image: dockersamples/examplevotingapp_vote
+      - image: us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-vote/examplevotingapp_vote:v1
         name: vote
         ports:
         - containerPort: 80
