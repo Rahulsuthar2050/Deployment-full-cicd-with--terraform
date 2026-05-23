@@ -15,7 +15,7 @@ spec:
         app: result
     spec:
       containers:
-      - image: dockersamples/examplevotingapp_result
+      - image: us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-result/examplevotingapp_result:v1
         name: result
         ports:
         - containerPort: 80
