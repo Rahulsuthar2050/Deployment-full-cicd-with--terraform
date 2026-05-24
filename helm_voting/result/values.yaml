@@ -1,4 +1,4 @@
 image:
-  repo: "latest"
+  repo: "us-east1-docker.pkg.dev/mario-super-demo-496610/microarch-result/examplevotingapp_result:v1"
   name: "result"
 
