@@ -15,7 +15,7 @@ spec:
         app: vote
     spec:
       containers:
-      - image: "{{ .Values.image.repo }}"
+      - image: "{{ .values.image.repo }}"
         name: vote
         ports:
         - containerPort: 80
